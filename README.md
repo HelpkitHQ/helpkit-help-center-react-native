@@ -15,7 +15,7 @@
 </p>
 
 [![npm version](https://img.shields.io/npm/v/@helpkit/helpkit-help-center-react-native.svg)](https://www.npmjs.com/package/@helpkit/helpkit-help-center-react-native)
-[![license](https://img.shields.io/npm/l/@helpkit/helpkit-help-center-react-native.svg)](https://github.com/HelpkitHQ/helpkit-help-center-react-native/blob/main/LICENSE)
+[![license](https://img.shields.io/npm/l/@helpkit/helpkit-help-center-react-native.svg)](https://github.com/HelpkitHQ/helpkit-help-center-react-native/blob/main/LICENSE.md)
 
 ## Overview
 
@@ -142,7 +142,7 @@ const openHelpCenter = () => {
 }
 
 // In your component
-;<Button title="Help Center" onPress={openHelpCenter} />
+<Button title="Help Center" onPress={openHelpCenter} />
 ```
 
 ### Opening the Contact Form
@@ -209,10 +209,8 @@ When initializing the HelpKit component, you can provide various configuration o
   config={{
     // Using a static string
     headerTitle: 'Custom Menu Bar Title',
-
     // OR using a function for i18n support
     headerTitle: () => i18n.t('helpCenter'),
-
     version: 'de',
     debug: true,
   }}
@@ -226,7 +224,7 @@ HelpKit supports internationalization for the modal header title through a funct
 ```jsx
 // Example with i18n-js
 import * as i18n from 'i18n-js'
-;<HelpKit
+<HelpKit
   projectId="your-project"
   config={{
     headerTitle: () => i18n.t('helpCenter'),
