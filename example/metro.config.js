@@ -16,7 +16,7 @@ module.exports = {
     disableHierarchicalLookup: true,
     extraNodeModules: {
       // Alias the scoped package to the root directory
-      '@helpkit/react-native-help-center': packagePath,
+      '@helpkit/helpkit-help-center-react-native': packagePath,
     },
   },
 }

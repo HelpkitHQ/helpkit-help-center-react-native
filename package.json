@@ -24,7 +24,7 @@
     "prepare": "npm run build"
   },
   "author": "HelpKit <developers@helpkit.so> (https://www.helpkit.so)",
-  "license": "SEE LICENSE IN LICENSE.md",
+  "license": "SEE LICENSE",
   "description": "React Native SDK for embedding Notion-powered HelpKit help centers in your mobile app",
   "dependencies": {
     "react-native-webview": ">=11.0.0"
@@ -39,7 +39,7 @@
   "peerDependencies": {
     "react": ">=18.0.0",
     "react-native": ">=0.70.0",
-    "react-native-safe-area-context": "^5.3.0",
+    "react-native-safe-area-context": ">=4.0.0",
     "react-native-webview": ">=11.0.0"
   },
   "tsup": {

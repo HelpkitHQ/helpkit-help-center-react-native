@@ -15,7 +15,6 @@
 </p>
 
 [![npm version](https://img.shields.io/npm/v/@helpkit/helpkit-help-center-react-native.svg)](https://www.npmjs.com/package/@helpkit/helpkit-help-center-react-native)
-[![license](https://img.shields.io/npm/l/@helpkit/helpkit-help-center-react-native.svg)](https://github.com/HelpkitHQ/helpkit-help-center-react-native/blob/main/LICENSE.md)
 
 ## Overview
 

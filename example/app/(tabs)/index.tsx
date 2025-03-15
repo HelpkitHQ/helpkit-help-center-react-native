@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native'
-import { HelpKitSDK } from '@helpkit/react-native-help-center'
+import { HelpKitSDK } from '@helpkit/helpkit-help-center-react-native'
 import Octicons from '@expo/vector-icons/Octicons'
 
 interface SettingItemProps {
