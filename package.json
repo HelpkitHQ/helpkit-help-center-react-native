@@ -69,5 +69,17 @@
   "bugs": {
     "url": "https://github.com/HelpkitHQ/helpkit-help-center-react-native/issues"
   },
-  "homepage": "https://www.helpkit.so"
+  "homepage": "https://www.helpkit.so",
+  "keywords": [
+    "react native",
+    "help center",
+    "help desk",
+    "helpkit",
+    "notion",
+    "documentation",
+    "knowledge base",
+    "customer support",
+    "faq",
+    "mobile"
+  ]
 }

@@ -286,3 +286,7 @@ interface ContactFields {
 ## License
 
 This project has a custom license - see the LICENSE file for details.
+
+---
+
+Created with ❤️ by [HelpKit](https://www.helpkit.so) – Show us support by ⭐️ this project if it helped you!
