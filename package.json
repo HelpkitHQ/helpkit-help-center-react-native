@@ -1,0 +1,73 @@
+{
+  "name": "@helpkit/helpkit-help-center-react-native",
+  "version": "0.0.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "echo \"No tests implemented yet\"",
+    "prepare": "npm run build"
+  },
+  "author": "HelpKit <developers@helpkit.so> (https://www.helpkit.so)",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "description": "React Native SDK for embedding Notion-powered HelpKit help centers in your mobile app",
+  "dependencies": {
+    "react-native-webview": ">=11.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.10",
+    "@types/react-native": "^0.73.0",
+    "react": "^19.0.0",
+    "tsup": "^8.0.2",
+    "typescript": "^5.3.3"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-native": ">=0.70.0",
+    "react-native-safe-area-context": "^5.3.0",
+    "react-native-webview": ">=11.0.0"
+  },
+  "tsup": {
+    "entry": [
+      "src/index.ts"
+    ],
+    "format": [
+      "cjs",
+      "esm"
+    ],
+    "splitting": false,
+    "sourcemap": true,
+    "clean": true,
+    "dts": true,
+    "treeshake": true,
+    "platform": "neutral",
+    "external": [
+      "react",
+      "react-native",
+      "react-native-webview"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HelpkitHQ/helpkit-help-center-react-native.git"
+  },
+  "bugs": {
+    "url": "https://github.com/HelpkitHQ/helpkit-help-center-react-native/issues"
+  },
+  "homepage": "https://github.com/HelpkitHQ/helpkit-help-center-react-native#readme"
+}
