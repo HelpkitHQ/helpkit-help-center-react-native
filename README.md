@@ -30,6 +30,12 @@ HelpKit provides a seamless way to integrate a customizable help center and supp
 - 🌐 Multi-language support
 - 🤖 AI-powered support (optional)
 
+## Demo
+
+<p align="center">
+  <img src="https://public.helpkit.co/helpkit-react-native-first-demo-gif.gif" alt="HelpKit Demo">
+</p>
+
 ## Installation
 
 ```bash
