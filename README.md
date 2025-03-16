@@ -141,7 +141,7 @@ const openHelpCenter = () => {
 }
 
 // In your component
-<Button title="Help Center" onPress={openHelpCenter} />
+;<Button title="Help Center" onPress={openHelpCenter} />
 ```
 
 ### Opening the Contact Form
@@ -223,7 +223,7 @@ HelpKit supports internationalization for the modal header title through a funct
 ```jsx
 // Example with i18n-js
 import * as i18n from 'i18n-js'
-<HelpKit
+;<HelpKit
   projectId="your-project"
   config={{
     headerTitle: () => i18n.t('helpCenter'),
@@ -284,7 +284,9 @@ interface ContactFields {
 
 ## License
 
-This project has a custom license - see the LICENSE file for details.
+Copyright 2025 HelpKit. All rights reserved.
+
+By downloading or using HelpKit Mobile Applications and/or SDKs, you agree to the [HelpKit Terms of Service](https://helpkit.so/terms) and acknowledge that such terms govern your use of and access to the Mobile Applications and/or SDK.
 
 ---
 
