@@ -180,6 +180,24 @@ export default function HelpKit({ projectId, config = {} }: HelpKitProps) {
   const [webViewReady, setWebViewReady] = useState(false)
   const [initialUrlLoaded, setInitialUrlLoaded] = useState(false)
 
+  // Store current state values in refs to avoid dependency issues
+  const optionsRef = useRef(options)
+  const webViewReadyRef = useRef(webViewReady)
+  const modalVisibleRef = useRef(modalVisible)
+
+  // Update refs when state changes
+  useEffect(() => {
+    optionsRef.current = options
+  }, [options])
+
+  useEffect(() => {
+    webViewReadyRef.current = webViewReady
+  }, [webViewReady])
+
+  useEffect(() => {
+    modalVisibleRef.current = modalVisible
+  }, [modalVisible])
+
   // Setup the animation
   useEffect(() => {
     if (loading) {
@@ -242,7 +260,7 @@ export default function HelpKit({ projectId, config = {} }: HelpKitProps) {
   const postMessageToWebView = (message: any) => {
     logDebug('Posting message to WebView: ', message)
     if (!webViewRef.current) {
-      logDebug('Cannot post message: WebView reference is null', options)
+      logDebug('Cannot post message: WebView reference is null', optionsRef.current)
       return
     }
 
@@ -263,20 +281,20 @@ export default function HelpKit({ projectId, config = {} }: HelpKitProps) {
       }
     }
 
-    logDebug(`Posting message to WebView: ${messageString}`, options)
+    logDebug(`Posting message to WebView: ${messageString}`, optionsRef.current)
 
     try {
       webViewRef.current.postMessage(messageString)
-      logDebug('Message posted successfully', options)
+      logDebug('Message posted successfully', optionsRef.current)
     } catch (error) {
       console.error('[HelpKit SDK] Error posting message to WebView:', error)
     }
   }
 
-  // Effect to handle sending stored contact fields when WebView is ready
+  // Effect to handle sending stored contact fields when WebView is ready - use refs
   useEffect(() => {
     if (webViewReady && modalVisible && options.contactFields) {
-      logDebug('WebView ready and modal visible - sending contact fields', options)
+      logDebug('WebView ready and modal visible - sending contact fields', optionsRef.current)
       const contactFieldsMessage = {
         type: 'helpkit-setContactFields',
         contactFields: options.contactFields,
@@ -285,6 +303,7 @@ export default function HelpKit({ projectId, config = {} }: HelpKitProps) {
     }
   }, [webViewReady, modalVisible, options.contactFields])
 
+  // Setup only once on mount
   useEffect(() => {
     logDebug(`HelpKit component mounted with projectId: ${projectId}`, config)
     HelpKitSDK.setProject(projectId)
@@ -297,7 +316,8 @@ export default function HelpKit({ projectId, config = {} }: HelpKitProps) {
       setOptions((prev) => ({ ...prev, contactFields: savedContactFields }))
     }
 
-    return HelpKitSDK.setListener((visible, newPath, newOptions) => {
+    // Create listener once for the component lifecycle
+    const listenerCallback = (visible: boolean, newPath?: HelpKitPath, newOptions?: HelpKitOptions) => {
       if (visible) {
         // Show modal and navigate to specified path
         logDebug(`Showing modal with path: ${JSON.stringify(newPath)}, options: ${JSON.stringify(newOptions)}`, config)
@@ -306,8 +326,8 @@ export default function HelpKit({ projectId, config = {} }: HelpKitProps) {
         const mergedOptions = {
           ...config,
           ...newOptions,
-          // Ensure contactFields are preserved from current options if not in newOptions
-          contactFields: newOptions?.contactFields || options.contactFields || HelpKitSDK.getContactFields(),
+          // Ensure contactFields are preserved
+          contactFields: newOptions?.contactFields || optionsRef.current.contactFields || HelpKitSDK.getContactFields(),
         }
 
         logDebug(`Using merged options: ${JSON.stringify(mergedOptions)}`, config)
@@ -320,8 +340,8 @@ export default function HelpKit({ projectId, config = {} }: HelpKitProps) {
         // Only update options to include the new contact fields
         setOptions((prevOptions) => ({ ...prevOptions, contactFields: newOptions.contactFields }))
 
-        // If WebView is ready and modal is visible, send immediately
-        if (webViewReady && modalVisible && webViewRef.current) {
+        // Use refs to check current state
+        if (webViewReadyRef.current && modalVisibleRef.current && webViewRef.current) {
           const contactFieldsMessage = {
             type: 'helpkit-setContactFields',
             contactFields: newOptions.contactFields,
@@ -335,8 +355,13 @@ export default function HelpKit({ projectId, config = {} }: HelpKitProps) {
         logDebug('Hiding modal', config)
         setModalVisible(false)
       }
-    })
-  }, [projectId, config, webViewReady, modalVisible, options.contactFields])
+    }
+
+    // Set the listener only once during component mount
+    const unsubscribe = HelpKitSDK.setListener(listenerCallback)
+
+    return unsubscribe
+  }, [projectId]) // Only depend on projectId, not config to avoid recreation
 
   const getHelpKitUrl = (): string => {
     const withAI = false

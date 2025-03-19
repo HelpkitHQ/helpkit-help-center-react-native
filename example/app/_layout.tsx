@@ -57,7 +57,6 @@ function RootLayoutNav() {
       </Stack>
       <HelpKit projectId="demos" />
       {/* <HelpKit projectId="demos" config={{ debug: true }} /> */}
-      {/* <HelpKit projectId="debug" config={{ debug: true, _internalDomain: 'hmcte.info' }} /> */}
     </ThemeProvider>
   )
 }
