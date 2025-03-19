@@ -21,7 +21,8 @@
     "dev": "tsup --watch",
     "typecheck": "tsc --noEmit",
     "test": "echo \"No tests implemented yet\"",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "patch:publish": "npm run build && npm version patch && npm publish && git push && git push --tags"
   },
   "author": "HelpKit <developers@helpkit.so> (https://www.helpkit.so)",
   "license": "SEE LICENSE",
