@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { View, Modal, StyleSheet, TouchableOpacity, Text, Animated, Easing } from 'react-native'
+import { View, Modal, StyleSheet, TouchableOpacity, Text, Animated, Easing, Platform } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { WebView } from 'react-native-webview'
 
@@ -178,6 +178,7 @@ export default function HelpKit({ projectId, config = {} }: HelpKitProps) {
   const spinAnimation = useRef(new Animated.Value(0)).current
   const shimmerAnimation = useRef(new Animated.Value(0)).current
   const [webViewReady, setWebViewReady] = useState(false)
+  const [initialUrlLoaded, setInitialUrlLoaded] = useState(false)
 
   // Setup the animation
   useEffect(() => {
@@ -380,6 +381,13 @@ export default function HelpKit({ projectId, config = {} }: HelpKitProps) {
     logDebug(`Navigation state changed: ${navState.url}`, options)
     // Update the back navigation state
     setCanGoBack(navState.canGoBack)
+
+    // Android-specific fix: Clear loading state after navigation changes
+    // This prevents the skeleton from getting stuck on navigation
+    if (Platform.OS === 'android' && initialUrlLoaded) {
+      logDebug('Android navigation - ensuring loading state is cleared', options)
+      setLoading(false)
+    }
   }
 
   // Bridge script to intercept window.parent.postMessage calls and redirect them to ReactNativeWebView
@@ -567,13 +575,29 @@ export default function HelpKit({ projectId, config = {} }: HelpKitProps) {
           domStorageEnabled={true}
           onNavigationStateChange={onNavigationStateChange}
           injectedJavaScript={injectedJavaScriptBridge}
-          onLoadStart={() => setLoading(true)}
+          onLoadStart={(event) => {
+            // Only show loading indicator on initial page load
+            // Android has different behavior than iOS for internal navigation
+            if (!initialUrlLoaded) {
+              logDebug('Initial load - showing skeleton', options)
+              setLoading(true)
+            } else if (Platform.OS !== 'android') {
+              // For iOS, we can use the normal behavior
+              setLoading(true)
+            }
+          }}
           onLoad={() => {
             logDebug('WebView onLoad event fired', options)
           }}
           onLoadEnd={() => {
             logDebug('WebView onLoadEnd event fired', options)
             setLoading(false)
+            setInitialUrlLoaded(true)
+
+            // Android-specific fix: Add extra safety to ensure loading state is cleared
+            if (Platform.OS === 'android') {
+              setTimeout(() => setLoading(false), 100)
+            }
           }}
           onError={(error) => {
             console.error('[HelpKit SDK] WebView error:', error.nativeEvent)

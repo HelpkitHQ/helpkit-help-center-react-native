@@ -53,14 +53,14 @@ export default function TabOneScreen() {
           icon="repo"
           description="Directly open an help article"
           note="HelpKitSDK.openArticle('HK_Article_Id')"
-          onPress={() => HelpKitSDK.openArticle('4f6uukudtU8ubHNNUn2t1n')}
+          onPress={() => HelpKitSDK.openArticle('4pXKV6QwyrKzbUepdxipfz')}
         />
         <SettingItem
           title="Open Help Category"
           icon="repo-clone"
           description="Directly open an help category"
           note="HelpKitSDK.openContact('HK_Category_Id')"
-          onPress={() => HelpKitSDK.openCategory('4f6uukudtToLurbxrG8LDw')}
+          onPress={() => HelpKitSDK.openCategory('4pXKV6Qwyr4E7JwpKGYzCH')}
         />
         <SettingItem
           title="Switch to Different Version"

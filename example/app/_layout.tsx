@@ -55,8 +55,9 @@ function RootLayoutNav() {
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
       </Stack>
-      {/* <HelpKit projectId="support" config={{ debug: true, _internalDomain: 'hmcte.info' }} /> */}
-      <HelpKit projectId="support" />
+      <HelpKit projectId="demos" />
+      {/* <HelpKit projectId="demos" config={{ debug: true }} /> */}
+      {/* <HelpKit projectId="debug" config={{ debug: true, _internalDomain: 'hmcte.info' }} /> */}
     </ThemeProvider>
   )
 }
